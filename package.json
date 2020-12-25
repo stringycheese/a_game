@@ -1,0 +1,15 @@
+{
+  "name": "a_game",
+  "version": "1.0.0",
+  "description": "This is so cool.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "heroku"
+  ],
+  "author": "Hasan Sabri",
+  "license": "MIT"
+}
