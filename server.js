@@ -7,14 +7,16 @@ var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
-app.set('port', 5000);
+let port = process.env.PORT || 8080;
+
+app.set('port', port);
 app.use('/static', express.static(__dirname + '/static'));
 
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(5000, function() {
+server.listen(port, function() {
   console.log('Starting server on port 5000');
 });
 
