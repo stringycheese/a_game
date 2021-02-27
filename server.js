@@ -12,30 +12,27 @@ let port = process.env.PORT || 8080;
 app.set('port', port);
 app.use('/static', express.static(__dirname + '/static'));
 
-app.get('/', function(request, response) {
+app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(port, function() {
+server.listen(port, () => {
   console.log('Starting server on port 5000');
 });
 
-io.on('connection', function(socket) {
-});
-
-setInterval(function() {
+setInterval(() => {
   io.sockets.emit('message', 'hi!');
 }, 1000);
 
 var players = {};
-io.on('connection', function(socket) {
-  socket.on('new player', function() {
+io.on('connection', (socket) => {
+  socket.on('new player', () => {
     players[socket.id] = {
       x: 300,
       y: 300
     };
   });
-  socket.on('movement', function(data) {
+  socket.on('movement', (data) => {
     var player = players[socket.id] || {};
     if(player.x > 0){
     if (data.left) {
@@ -55,8 +52,11 @@ io.on('connection', function(socket) {
       player.y += 5;
     }}
   });
+  socket.on('disconnect', () => {
+    delete players[socket.id];
+  });
 });
 
-setInterval(function() {
+setInterval(() => {
   io.sockets.emit('state', players);
 }, 1000 / 60);
